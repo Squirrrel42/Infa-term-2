@@ -51,3 +51,27 @@ void shaker_sort(unsigned *arr, unsigned begin_i, unsigned end_i)
 ![](https://github.com/Squirrrel42/Infa-term-2/blob/main/Lab2/images/shaker%20log.png)
 
 Как видно из графика в логарифмическом масштабе, зависимость времени от размера степенная. С точностью показатель степени равен 2.0817214934973447, таким образом доказано, что зависимость квадратичная.
+
+Среднее время для прямого прохода:
+
+![](https://github.com/Squirrrel42/Infa-term-2/blob/main/Lab2/images/forward%20step.png)
+
+Логарифмический масштаб:
+
+![](https://github.com/Squirrrel42/Infa-term-2/blob/main/Lab2/images/forward%20step%20log.png)
+
+Показатель степени равен 2.1071723529592754
+
+Среднее время для обратного прохода:
+
+![](https://github.com/Squirrrel42/Infa-term-2/blob/main/Lab2/images/backward%20step.png)
+
+Логарифмический масштаб:
+
+![](https://github.com/Squirrrel42/Infa-term-2/blob/main/Lab2/images/backward%20step%20log.png)
+
+Показатель степени равен 2.138773131646597
+
+
+Во-первых, из графиков видно, что время слабо завист от размера массива при малых значениях, а при больших зависимость O(N^2).
+Во-вторых, сортировка пузырьком с использованием только прямого или обратного прохода немного медленнее, чем шейкерная сортировка, использующая оба прохода.
