@@ -109,3 +109,122 @@ void comb_sort(unsigned *arr, unsigned length)
 Как видно из графика, действительно получилась прямая линия. Значит, ассимтотика алгоритма действительно O(nlog(n))
 Как и в шейкерной сортировке, здесь время слабо зависит от размера массива при малых значениях. Разброс особо сильно заметен на втором графике. Чем больше расзмер массива, теб болеее стабильным становится график.
 
+## III. Сортировка Шелла
+
+### 1.
+
+Шаг: d_i = d_i-1 / 2
+
+```C++
+void shell_sort_1(unsigned *arr, unsigned length)
+{
+
+    unsigned temp;
+    for(unsigned d = length/2; d > 0; d /= 2)
+    {
+        for(unsigned i = d; i < length; i++)
+        {
+            for(unsigned j = i; j >= d; j -= d)
+            {
+                if(arr[j] < arr[j-d])
+                {
+                    temp = arr[j];
+                    arr[j] = arr[j-d];
+                    arr[j-d] = temp;
+                }
+            }
+        }
+    }
+}
+```
+
+Среднее время:
+![](https://github.com/Squirrrel42/Infa-term-2/blob/main/Lab2/images/shell%201.png)
+
+График в логарифмическом масштабе:
+![](https://github.com/Squirrrel42/Infa-term-2/blob/main/Lab2/images/shell%201%20check.png)
+
+Наклон графика равен 1.932.
+То есть, ассимптотика близка к O(n^2)
+
+### 2.
+
+Шаг: d_i = 2^i - 1 — последовательность Хиббарда
+
+```C++
+void shell_sort_2(unsigned *arr, unsigned length)
+{
+    unsigned temp;
+    unsigned power = floor(log2(length));
+    unsigned d = exp(power * log(2)) - 1;
+    while(d>0)
+    {
+        for(unsigned i = d; i < length; i++)
+        {
+            for(unsigned j = i; j >= d; j -= d)
+            {
+                if(arr[j] < arr[j-d])
+                {
+                    temp = arr[j];
+                    arr[j] = arr[j-d];
+                    arr[j-d] = temp;
+                }
+            }
+        }
+        d = (d + 1) / 2 - 1;
+    }
+}
+```
+
+Среднее время:
+![](https://github.com/Squirrrel42/Infa-term-2/blob/main/Lab2/images/shell%202.png)
+
+График в логарифмическом масштабе:
+![](https://github.com/Squirrrel42/Infa-term-2/blob/main/Lab2/images/shell%202%20check.png)
+
+Наклон графика равен 1.854
+Ассимптотика близка к O(n^2), но быстрее, чем в п. 1
+
+### 3.
+
+Шаг — обратная последовательность фибоначчи
+
+```C++
+void shell_sort_3(unsigned *arr, unsigned length, unsigned *fibonacci)
+{
+    unsigned i=0, s=0, temp;
+    while(fibonacci[i++] <= length) s++;
+
+    unsigned d=fibonacci[--s];
+    while(d>0)
+    {
+        for(unsigned i = d; i < length; i++)
+        {
+            for(unsigned j = i; j >= d; j -= d)
+            {
+                if(arr[j] < arr[j-d])
+                {
+                    temp = arr[j];
+                    arr[j] = arr[j-d];
+                    arr[j-d] = temp;
+                }
+            }
+        }
+        d = fibonacci[--s];
+    }
+}
+```
+
+fibonacci — это массив с числами фибоначчи; на нулевом месте ноль.
+
+Среднее время:
+![](https://github.com/Squirrrel42/Infa-term-2/blob/main/Lab2/images/shell%203.png)
+
+График в логарифмическом масштабе:
+![](https://github.com/Squirrrel42/Infa-term-2/blob/main/Lab2/images/shell%203%20check.png)
+
+Наклон графика равен 1.984
+Ассимптотика близка к O(n^2)
+
+Самой эффективной сортировкой Шелла из рассмотренных оказалась сортировка с последовательностью Хиббарда.
+
